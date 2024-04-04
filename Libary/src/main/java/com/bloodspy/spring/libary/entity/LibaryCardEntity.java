@@ -1,7 +1,6 @@
 package com.bloodspy.spring.libary.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -24,7 +23,9 @@ public class LibaryCardEntity {
     @Column(name = "end_time")
     private Date endTime;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade =
+            {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
     @JoinTable(name = "libary_card_book",
     joinColumns = @JoinColumn(name = "libary_card_id"),
     inverseJoinColumns = @JoinColumn(name = "book_id"))
@@ -32,7 +33,7 @@ public class LibaryCardEntity {
 
     @OneToOne(mappedBy = "libaryCard",
     cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private ReaderEntity reader;
 
     public int getId() {

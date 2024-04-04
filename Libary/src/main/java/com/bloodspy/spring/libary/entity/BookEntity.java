@@ -1,7 +1,6 @@
 package com.bloodspy.spring.libary.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -34,10 +33,11 @@ public class BookEntity {
     @Column(name = "cost")
     private int cost;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "libary_card_book",
-    joinColumns = @JoinColumn(name = "book_id"),
-    inverseJoinColumns = @JoinColumn(name = "libary_card_id"))
+    @ManyToMany(cascade =
+            {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            mappedBy = "books"
+    )
+    @JsonIgnore
     private List<LibaryCardEntity> libaryCards;
 
     public int getId() {

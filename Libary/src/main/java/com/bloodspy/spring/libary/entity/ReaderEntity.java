@@ -28,7 +28,6 @@ public class ReaderEntity {
 
     @OneToOne()
     @JoinColumn(name = "libary_card_id")
-    @JsonBackReference
     private LibaryCardEntity libaryCard;
 
     public int getId() {
