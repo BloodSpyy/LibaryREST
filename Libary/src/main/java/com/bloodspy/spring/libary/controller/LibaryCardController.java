@@ -36,21 +36,21 @@ public class LibaryCardController {
     public String saveLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
         libaryCardService.saveLibaryCard(libaryCard);
 
-        return "Libary card with " + libaryCard.getId() + " was saved";
+        return "Libary card with id " + libaryCard.getId() + " was saved";
     }
 
     @PutMapping("/libaryCards")
     public String updateLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
         libaryCardService.saveLibaryCard(libaryCard);
 
-        return "Libary card with " + libaryCard.getId() + " was updated";
+        return "Libary card with id " + libaryCard.getId() + " was updated";
     }
 
     @DeleteMapping("/libaryCards/{id}")
     public String removeLibaryCard(@PathVariable(name = "id") int id) {
         libaryCardService.deleteLibaryCard(id);
 
-        return "Libary card with " + id + " was deleted";
+        return "Libary card with id " + id + " was deleted";
     }
 
 }

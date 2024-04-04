@@ -36,7 +36,7 @@ public class AuthorController {
     public String addAuthor(@RequestBody AuthorEntity author) {
         authorService.saveAuthor(author);
 
-        return "Author with " + author.getId() + " was saved";
+        return "Author with id " + author.getId() + " was saved";
 
     }
 
@@ -44,13 +44,13 @@ public class AuthorController {
     public String updateAuthor(@RequestBody AuthorEntity author) {
         authorService.saveAuthor(author);
 
-        return "Author with " + author.getId() + " was updated";
+        return "Author with id " + author.getId() + " was updated";
     }
 
     @DeleteMapping("/authors/{id}")
     public String deleteAuthor(@PathVariable(name = "id") int id) {
         authorService.deleteAuthor(id);
 
-        return "Author with " + id + " was deleted";
+        return "Author with id " + id + " was deleted";
     }
 }

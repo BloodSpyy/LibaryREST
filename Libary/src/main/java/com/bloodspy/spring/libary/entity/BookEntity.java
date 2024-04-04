@@ -1,5 +1,7 @@
 package com.bloodspy.spring.libary.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,11 +20,11 @@ public class BookEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "style_id")
     private StyleEntity style;
 
@@ -36,7 +38,7 @@ public class BookEntity {
     @JoinTable(name = "libary_card_book",
     joinColumns = @JoinColumn(name = "book_id"),
     inverseJoinColumns = @JoinColumn(name = "libary_card_id"))
-    private List<AuthorEntity> authors;
+    private List<LibaryCardEntity> libaryCards;
 
     public int getId() {
         return id;
@@ -86,12 +88,12 @@ public class BookEntity {
         this.cost = cost;
     }
 
-    public List<AuthorEntity> getAuthors() {
-        return authors;
+    public List<LibaryCardEntity> getLibaryCards() {
+        return libaryCards;
     }
 
-    public void setAuthors(List<AuthorEntity> authors) {
-        this.authors = authors;
+    public void setLibaryCards(List<LibaryCardEntity> libaryCards) {
+        this.libaryCards = libaryCards;
     }
 
     @Override

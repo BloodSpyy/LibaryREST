@@ -1,6 +1,11 @@
 package com.bloodspy.spring.libary.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="author")
@@ -18,6 +23,11 @@ public class AuthorEntity {
 
     @Column(name = "surname")
     private String surname;
+
+    @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "author")
+    @JsonIgnore
+    private List<BookEntity> books;
 
     public int getId() {
         return id;
@@ -41,6 +51,14 @@ public class AuthorEntity {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public List<BookEntity> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookEntity> books) {
+        this.books = books;
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.bloodspy.spring.libary.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class BookController {
     @GetMapping("/books/{id}")
     public BookEntity getBook(@PathVariable(name = "id") int id) {
         BookEntity book = bookService.getBook(id);
-        
+
         return book;
     }
 
