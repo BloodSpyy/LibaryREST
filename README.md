@@ -13,7 +13,7 @@
 
 ## Архитектура PostgreSQL:
 
-![[DataBaseSchema.png]]
+(https://github.com/BloodSpyy/LibaryREST/blob/main/static/DataBaseSchema.png)
 
 ## Возможности, реализуемые в проекте:
 #### 1. Добавление, изменение, запрашиваение, удаление книг, авторов, читателей, библиотечных карточек, стилей.
