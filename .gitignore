@@ -165,5 +165,6 @@ replay_pid*
 ### Obsidian ###
 # config dir
 .obsidian/
+.obsidian.vimrc
 
 application-local.properties
