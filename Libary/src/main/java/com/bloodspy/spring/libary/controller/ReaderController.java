@@ -35,17 +35,17 @@ public class ReaderController {
     }
 
     @PostMapping("/readers")
-    public ReaderEntity saveReader(@RequestBody ReaderEntity reader) {
-        reader = readerService.saveReader(reader);
+    public String saveReader(@RequestBody ReaderEntity reader) {
+        readerService.saveReader(reader);
 
-        return reader;
+        return "Reader with id " + reader.getId() + " was saved";
     }
 
     @PutMapping("/readers")
-    public ReaderEntity updateReader(@RequestBody ReaderEntity reader) {
-        reader = readerService.saveReader(reader);
+    public String updateReader(@RequestBody ReaderEntity reader) {
+        readerService.saveReader(reader);
 
-        return reader;
+        return "Reader with id + " + reader.getId() + " was updated";
     }
 
     @DeleteMapping("/readers/{id}")

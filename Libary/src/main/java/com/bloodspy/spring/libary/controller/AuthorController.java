@@ -32,17 +32,18 @@ public class AuthorController {
     }
 
     @PostMapping("/authors")
-    public AuthorEntity addAuthor(@RequestBody AuthorEntity author) {
-        author = authorService.saveAuthor(author);
+    public String addAuthor(@RequestBody AuthorEntity author) {
+        authorService.saveAuthor(author);
 
-        return author;
+        return "Author with + " + author.getId() + " was saved";
+
     }
 
     @PutMapping("/authors")
-    public AuthorEntity updateAuthor(@RequestBody AuthorEntity author) {
-        author = authorService.saveAuthor(author);
+    public String updateAuthor(@RequestBody AuthorEntity author) {
+        authorService.saveAuthor(author);
 
-        return author;
+        return "Author with + " + author.getId() + " was updated";
     }
 
     @DeleteMapping("/authors/{id}")

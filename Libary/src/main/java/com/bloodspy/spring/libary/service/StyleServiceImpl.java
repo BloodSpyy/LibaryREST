@@ -31,10 +31,8 @@ public class StyleServiceImpl implements StyleService{
     }
 
     @Override
-    public StyleEntity saveStyle(StyleEntity style) {
-        style = styleRepository.save(style);
-
-        return style;
+    public void saveStyle(StyleEntity style) {
+        styleRepository.save(style);
     }
 
     @Override

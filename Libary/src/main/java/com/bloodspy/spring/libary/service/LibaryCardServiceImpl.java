@@ -31,10 +31,8 @@ public class LibaryCardServiceImpl implements LibaryCardService {
     }
 
     @Override
-    public LibaryCardEntity saveLibaryCard(LibaryCardEntity libaryCard) {
-        libaryCard = libaryCardRepository.save(libaryCard);
-
-        return libaryCard;
+    public void saveLibaryCard(LibaryCardEntity libaryCard) {
+        libaryCardRepository.save(libaryCard);
     }
 
     @Override

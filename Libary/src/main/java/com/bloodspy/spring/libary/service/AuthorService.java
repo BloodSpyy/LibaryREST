@@ -9,7 +9,7 @@ public interface AuthorService {
 
     public AuthorEntity getAuthor(int id);
 
-    public AuthorEntity saveAuthor(AuthorEntity author);
+    public void saveAuthor(AuthorEntity author);
 
     public void deleteAuthor(int id);
 }

@@ -32,17 +32,17 @@ public class LibaryCardController {
     }
 
     @PostMapping("/libaryCards")
-    public LibaryCardEntity saveLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
-        libaryCard = libaryCardService.saveLibaryCard(libaryCard);
+    public String saveLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
+        libaryCardService.saveLibaryCard(libaryCard);
 
-        return libaryCard;
+        return "Libary card with " + libaryCard.getId() + " was saved";
     }
 
     @PutMapping("/libaryCards")
-    public LibaryCardEntity updateLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
-        libaryCard = libaryCardService.saveLibaryCard(libaryCard);
+    public String updateLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
+        libaryCardService.saveLibaryCard(libaryCard);
 
-        return libaryCard;
+        return "Libary card with " + libaryCard.getId() + " was updated";
     }
 
     @DeleteMapping("/libaryCards/{id}")

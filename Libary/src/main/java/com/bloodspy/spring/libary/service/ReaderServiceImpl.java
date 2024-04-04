@@ -31,11 +31,8 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public ReaderEntity saveReader(ReaderEntity reader) {
-
-        reader = readerRepository.save(reader);
-
-        return reader;
+    public void saveReader(ReaderEntity reader) {
+        readerRepository.save(reader);
     }
 
     @Override

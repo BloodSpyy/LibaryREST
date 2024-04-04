@@ -33,17 +33,17 @@ public class StyleController {
     }
 
     @PostMapping("/styles")
-    public StyleEntity addStyle(@RequestBody StyleEntity style) {
-        style = styleService.saveStyle(style);
+    public String addStyle(@RequestBody StyleEntity style) {
+        styleService.saveStyle(style);
 
-        return style;
+        return "Style with id " + style.getId() + " was save";
     }
 
     @PutMapping("/styles")
-    public StyleEntity updateStyle(@RequestBody StyleEntity style) {
-        style = styleService.saveStyle(style);
+    public String updateStyle(@RequestBody StyleEntity style) {
+        styleService.saveStyle(style);
 
-        return style;
+        return "Style with id + " + style.getId() + " was updated";
     }
 
     @DeleteMapping("/styles/{id}")

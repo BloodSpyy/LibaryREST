@@ -9,7 +9,7 @@ public interface ReaderService {
 
     public ReaderEntity getReader(int id);
 
-    public ReaderEntity saveReader(ReaderEntity reader);
+    public void saveReader(ReaderEntity reader);
 
     public void deleteReader(int id);
 }

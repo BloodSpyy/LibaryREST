@@ -9,7 +9,7 @@ public interface StyleService {
 
     public StyleEntity getStyle(int id);
 
-    public StyleEntity saveStyle(StyleEntity style);
+    public void saveStyle(StyleEntity style);
 
     public void deleteStyle(int id);
 }

@@ -9,7 +9,7 @@ public interface LibaryCardService {
 
     public LibaryCardEntity getLibaryCard(int id);
 
-    public LibaryCardEntity saveLibaryCard(LibaryCardEntity libaryCard);
+    public void saveLibaryCard(LibaryCardEntity libaryCard);
 
     public void deleteLibaryCard(int id);
 }
