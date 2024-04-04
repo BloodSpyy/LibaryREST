@@ -1,6 +1,7 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.entity.LibaryCardEntity;
+import com.bloodspy.spring.libary.service.LibaryCardService;
 import com.bloodspy.spring.libary.service.LibaryCardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class LibaryCardController {
         this.libaryCardService = libaryCardService;
     }
 
-    LibaryCardServiceImpl libaryCardService;
+    LibaryCardService libaryCardService;
 
     @GetMapping("/libaryCards")
     public List<LibaryCardEntity> getAllLibaryCard() {

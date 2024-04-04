@@ -1,6 +1,7 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.entity.AuthorEntity;
+import com.bloodspy.spring.libary.service.AuthorService;
 import com.bloodspy.spring.libary.service.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    AuthorServiceImpl authorService;
+    AuthorService authorService;
 
     @GetMapping("/authors")
     public List<AuthorEntity> getAllAuthor() {
@@ -35,7 +36,7 @@ public class AuthorController {
     public String addAuthor(@RequestBody AuthorEntity author) {
         authorService.saveAuthor(author);
 
-        return "Author with + " + author.getId() + " was saved";
+        return "Author with " + author.getId() + " was saved";
 
     }
 
@@ -43,7 +44,7 @@ public class AuthorController {
     public String updateAuthor(@RequestBody AuthorEntity author) {
         authorService.saveAuthor(author);
 
-        return "Author with + " + author.getId() + " was updated";
+        return "Author with " + author.getId() + " was updated";
     }
 
     @DeleteMapping("/authors/{id}")

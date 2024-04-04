@@ -1,6 +1,7 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.entity.StyleEntity;
+import com.bloodspy.spring.libary.service.StyleService;
 import com.bloodspy.spring.libary.service.StyleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class StyleController {
         this.styleService = styleService;
     }
 
-    StyleServiceImpl styleService;
+    StyleService styleService;
 
     @GetMapping("/styles")
     public List<StyleEntity> getAllStyle() {
@@ -43,7 +44,7 @@ public class StyleController {
     public String updateStyle(@RequestBody StyleEntity style) {
         styleService.saveStyle(style);
 
-        return "Style with id + " + style.getId() + " was updated";
+        return "Style with id " + style.getId() + " was updated";
     }
 
     @DeleteMapping("/styles/{id}")

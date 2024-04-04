@@ -1,8 +1,7 @@
 package com.bloodspy.spring.libary.controller;
 
-import com.bloodspy.spring.libary.entity.LibaryCardEntity;
 import com.bloodspy.spring.libary.entity.ReaderEntity;
-import com.bloodspy.spring.libary.service.LibaryCardServiceImpl;
+import com.bloodspy.spring.libary.service.ReaderService;
 import com.bloodspy.spring.libary.service.ReaderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class ReaderController {
-    public ReaderController(ReaderServiceImpl readerService, LibaryCardServiceImpl libaryCardService) {
+    @Autowired
+    public ReaderController(ReaderServiceImpl readerService) {
         this.readerService = readerService;
-        this.libaryCardService = libaryCardService;
     }
 
-    ReaderServiceImpl readerService;
-    LibaryCardServiceImpl libaryCardService;
+    ReaderService readerService;
 
     @GetMapping("/readers")
     public List<ReaderEntity> getAllReader() {
@@ -45,7 +43,7 @@ public class ReaderController {
     public String updateReader(@RequestBody ReaderEntity reader) {
         readerService.saveReader(reader);
 
-        return "Reader with id + " + reader.getId() + " was updated";
+        return "Reader with id " + reader.getId() + " was updated";
     }
 
     @DeleteMapping("/readers/{id}")
