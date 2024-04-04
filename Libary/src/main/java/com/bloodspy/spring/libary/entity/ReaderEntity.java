@@ -1,5 +1,7 @@
 package com.bloodspy.spring.libary.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -24,7 +26,59 @@ public class ReaderEntity {
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "libary_card")
+    @OneToOne()
+    @JoinColumn(name = "libary_card_id")
+    @JsonBackReference
     private LibaryCardEntity libaryCard;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public LibaryCardEntity getLibaryCard() {
+        return libaryCard;
+    }
+
+    public void setLibaryCard(LibaryCardEntity libaryCard) {
+        this.libaryCard = libaryCard;
+    }
+
+    @Override
+    public String toString() {
+        return "ReaderEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", libaryCard=" + libaryCard +
+                '}';
+    }
 }

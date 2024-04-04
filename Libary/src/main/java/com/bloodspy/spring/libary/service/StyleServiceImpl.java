@@ -25,7 +25,7 @@ public class StyleServiceImpl implements StyleService{
 
     @Override
     public StyleEntity getStyle(int id) {
-        StyleEntity style = styleRepository.getReferenceById(id);
+        StyleEntity style = styleRepository.findById(id).orElse(null);
 
         return style;
     }

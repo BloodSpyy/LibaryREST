@@ -38,10 +38,8 @@ public class AuthorController {
         return author;
     }
 
-    @PutMapping("/authors/{id}")
-    public AuthorEntity updateAuthor(@RequestBody AuthorEntity author,
-                                     @PathVariable(name = "id") int id) {
-        author.setId(id);
+    @PutMapping("/authors")
+    public AuthorEntity updateAuthor(@RequestBody AuthorEntity author) {
         author = authorService.saveAuthor(author);
 
         return author;

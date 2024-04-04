@@ -2,9 +2,6 @@ package com.bloodspy.spring.libary.entity;
 
 import jakarta.persistence.*;
 
-import java.awt.print.Book;
-import java.util.List;
-
 @Entity
 @Table(name = "style")
 public class StyleEntity {

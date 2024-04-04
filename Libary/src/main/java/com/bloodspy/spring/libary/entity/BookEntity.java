@@ -19,11 +19,11 @@ public class BookEntity {
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "author")
+    @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "style")
+    @JoinColumn(name = "style_id")
     private StyleEntity style;
 
     @Column(name = "length")
@@ -34,8 +34,8 @@ public class BookEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "libary_card_book",
-    joinColumns = @JoinColumn(name = "book"),
-    inverseJoinColumns = @JoinColumn(name = "libary_card"))
+    joinColumns = @JoinColumn(name = "book_id"),
+    inverseJoinColumns = @JoinColumn(name = "libary_card_id"))
     private List<AuthorEntity> authors;
 
     public int getId() {

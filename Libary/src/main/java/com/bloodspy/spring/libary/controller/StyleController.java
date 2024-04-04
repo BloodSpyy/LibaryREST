@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/")
 public class StyleController {
 
     @Autowired
@@ -38,10 +39,8 @@ public class StyleController {
         return style;
     }
 
-    @PutMapping("/styles/{id}")
-    public StyleEntity updateStyle(@RequestBody StyleEntity style,
-                                   @PathVariable(name = "id") int id) {
-        style.setId(id);
+    @PutMapping("/styles")
+    public StyleEntity updateStyle(@RequestBody StyleEntity style) {
         style = styleService.saveStyle(style);
 
         return style;
