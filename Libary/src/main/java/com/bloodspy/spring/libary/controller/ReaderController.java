@@ -1,6 +1,9 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.entity.ReaderEntity;
+import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
+import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
+import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
 import com.bloodspy.spring.libary.service.ReaderService;
 import com.bloodspy.spring.libary.service.ReaderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +14,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class ReaderController {
+    private final String entityName = "Reader";
+
     @Autowired
-    public ReaderController(ReaderServiceImpl readerService) {
+    public ReaderController(ReaderServiceImpl readerService,
+                            ReturnMessageHandler returnMessageHandler) {
         this.readerService = readerService;
+        this.returnMessageHandler = returnMessageHandler;
     }
 
     ReaderService readerService;
+    ReturnMessageHandler returnMessageHandler;
 
     @GetMapping("/readers")
     public List<ReaderEntity> getAllReader() {
@@ -29,27 +37,37 @@ public class ReaderController {
     public ReaderEntity getReader(@PathVariable(name = "id") int id) {
         ReaderEntity reader = readerService.getReader(id);
 
+        if(reader == null) {
+            throw new NoSuchException(entityName, id);
+        }
+
         return reader;
     }
 
     @PostMapping("/readers")
-    public String saveReader(@RequestBody ReaderEntity reader) {
+    public ContainerReturnMessage addReader(@RequestBody ReaderEntity reader) {
         readerService.saveReader(reader);
 
-        return "Reader with id " + reader.getId() + " was saved";
+        return returnMessageHandler.getAddMessage(entityName, reader.getId());
     }
 
     @PutMapping("/readers")
-    public String updateReader(@RequestBody ReaderEntity reader) {
+    public ContainerReturnMessage updateReader(@RequestBody ReaderEntity reader) {
         readerService.saveReader(reader);
 
-        return "Reader with id " + reader.getId() + " was updated";
+        return returnMessageHandler.getUpdateMessage(entityName, reader.getId());
     }
 
     @DeleteMapping("/readers/{id}")
-    public String deleteReader(@PathVariable(name = "id") int id) {
+    public ContainerReturnMessage deleteReader(@PathVariable(name = "id") int id) {
+        ReaderEntity reader = readerService.getReader(id);
+
+        if(reader == null) {
+            throw new NoSuchException(entityName, id);
+        }
+
         readerService.deleteReader(id);
 
-        return "Reader with id " + id + " was deleted";
+        return returnMessageHandler.getDeleteMessage(entityName, reader.getId());
     }
 }

@@ -1,6 +1,9 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.entity.StyleEntity;
+import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
+import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
+import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
 import com.bloodspy.spring.libary.service.StyleService;
 import com.bloodspy.spring.libary.service.StyleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +14,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class StyleController {
+    public final String entityName = "Style";
 
     @Autowired
-    public StyleController(StyleServiceImpl styleService) {
+    public StyleController(StyleServiceImpl styleService,
+                           ReturnMessageHandler returnMessageHandler) {
         this.styleService = styleService;
+        this.returnMessageHandler = returnMessageHandler;
     }
 
     StyleService styleService;
+    ReturnMessageHandler returnMessageHandler;
 
     @GetMapping("/styles")
     public List<StyleEntity> getAllStyle() {
@@ -30,27 +37,37 @@ public class StyleController {
     public StyleEntity getStyle(@PathVariable(name = "id") int id) {
         StyleEntity style = styleService.getStyle(id);
 
+        if(style == null) {
+            throw new NoSuchException(entityName, id);
+        }
+
         return style;
     }
 
     @PostMapping("/styles")
-    public String addStyle(@RequestBody StyleEntity style) {
+    public ContainerReturnMessage addStyle(@RequestBody StyleEntity style) {
         styleService.saveStyle(style);
 
-        return "Style with id " + style.getId() + " was save";
+        return returnMessageHandler.getAddMessage(entityName, style.getId());
     }
 
     @PutMapping("/styles")
-    public String updateStyle(@RequestBody StyleEntity style) {
+    public ContainerReturnMessage updateStyle(@RequestBody StyleEntity style) {
         styleService.saveStyle(style);
 
-        return "Style with id " + style.getId() + " was updated";
+        return returnMessageHandler.getUpdateMessage(entityName, style.getId());
     }
 
     @DeleteMapping("/styles/{id}")
-    public String deleteStyle(@PathVariable(name = "id") int id) {
+    public ContainerReturnMessage deleteStyle(@PathVariable(name = "id") int id) {
+        StyleEntity style = styleService.getStyle(id);
+
+        if(style == null) {
+            throw new NoSuchException(entityName, id);
+        }
+
         styleService.deleteStyle(id);
 
-        return "Style with id " + id + " was deleted";
+        return returnMessageHandler.getDeleteMessage(entityName, id);
     }
 }

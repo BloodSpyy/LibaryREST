@@ -1,6 +1,9 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.entity.AuthorEntity;
+import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
+import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
+import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
 import com.bloodspy.spring.libary.service.AuthorService;
 import com.bloodspy.spring.libary.service.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +14,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class AuthorController {
+    private final String entityName = "Author";
+
     @Autowired
-    public AuthorController(AuthorServiceImpl authorService) {
+    public AuthorController(AuthorServiceImpl authorService,
+                            ReturnMessageHandler returnMessageHandler) {
         this.authorService = authorService;
+        this.returnMessageHandler = returnMessageHandler;
+
     }
 
     AuthorService authorService;
+
+    ReturnMessageHandler returnMessageHandler;
 
     @GetMapping("/authors")
     public List<AuthorEntity> getAllAuthor() {
@@ -29,28 +39,37 @@ public class AuthorController {
     public AuthorEntity getAuthor(@PathVariable(name = "id") int id) {
         AuthorEntity author = authorService.getAuthor(id);
 
+        if(author == null) {
+            throw new NoSuchException(entityName, id);
+        }
+
         return author;
     }
 
     @PostMapping("/authors")
-    public String addAuthor(@RequestBody AuthorEntity author) {
+    public ContainerReturnMessage addAuthor(@RequestBody AuthorEntity author) {
         authorService.saveAuthor(author);
 
-        return "Author with id " + author.getId() + " was saved";
-
+        return returnMessageHandler.getAddMessage(entityName, author.getId());
     }
 
     @PutMapping("/authors")
-    public String updateAuthor(@RequestBody AuthorEntity author) {
+    public ContainerReturnMessage updateAuthor(@RequestBody AuthorEntity author) {
         authorService.saveAuthor(author);
 
-        return "Author with id " + author.getId() + " was updated";
+        return returnMessageHandler.getUpdateMessage(entityName, author.getId());
     }
 
     @DeleteMapping("/authors/{id}")
-    public String deleteAuthor(@PathVariable(name = "id") int id) {
+    public ContainerReturnMessage deleteAuthor(@PathVariable(name = "id") int id) {
+        AuthorEntity author = authorService.getAuthor(id);
+
+        if(author == null) {
+            throw new NoSuchException(entityName, id);
+        }
+
         authorService.deleteAuthor(id);
 
-        return "Author with id " + id + " was deleted";
+        return returnMessageHandler.getDeleteMessage(entityName, author.getId());
     }
 }
