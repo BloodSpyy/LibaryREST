@@ -6,6 +6,7 @@ import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
 import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
 import com.bloodspy.spring.libary.service.StyleService;
 import com.bloodspy.spring.libary.service.StyleServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@Tag(name = "Styles", description = "CRUD operations")
 public class StyleController {
     public final String entityName = "Style";
 

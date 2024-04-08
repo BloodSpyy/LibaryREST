@@ -6,6 +6,7 @@ import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
 import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
 import com.bloodspy.spring.libary.service.LibaryCardService;
 import com.bloodspy.spring.libary.service.LibaryCardServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@Tag(name = "Libary card", description = "CRUD operations")
 public class LibaryCardController {
     private final String entityName = "Libary card";
 

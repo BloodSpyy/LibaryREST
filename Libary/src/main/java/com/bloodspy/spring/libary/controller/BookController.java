@@ -5,6 +5,7 @@ import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
 import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
 import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
 import com.bloodspy.spring.libary.service.BookService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@Tag(name="Books", description = "CRUD operations")
 public class BookController {
     private final String entityName = "Book";
 
