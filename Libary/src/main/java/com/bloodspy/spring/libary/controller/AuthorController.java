@@ -2,8 +2,10 @@ package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.model.Author;
 import com.bloodspy.spring.libary.service.AuthorService;
+import com.bloodspy.spring.libary.utils.AppConstant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,11 @@ public class AuthorController {
     AuthorService authorService;
 
     @GetMapping
-    public List<Author> getAllAuthor() {
-        List<Author> authors = authorService.getAllAuthor();
-
-        return authors;
+    public ResponseEntity<Page<Author>> getAllAuthor(
+            @RequestParam(name = "page", required = false, defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstant.DEFAULT_PAGE_SIZE) int size
+    ) {
+        return authorService.getAllAuthor(page, size);
     }
 
     @GetMapping("{id}")

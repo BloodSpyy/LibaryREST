@@ -1,10 +1,11 @@
 package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.model.Reader;
-import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
 import com.bloodspy.spring.libary.service.ReaderService;
+import com.bloodspy.spring.libary.utils.AppConstant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +24,11 @@ public class ReaderController {
     ReaderService readerService;
 
     @GetMapping
-    public List<Reader> getAllReader() {
-        List<Reader> readers = readerService.getAllReader();
-
-        return readers;
+    public ResponseEntity<Page<Reader>> getAllReader(
+            @RequestParam(name = "page", required = false, defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstant.DEFAULT_PAGE_SIZE) int size
+    ) {
+        return readerService.getAllReader(page, size);
     }
 
     @GetMapping("/{id}")

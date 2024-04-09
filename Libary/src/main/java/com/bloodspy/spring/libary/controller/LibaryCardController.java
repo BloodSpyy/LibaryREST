@@ -1,10 +1,11 @@
 package com.bloodspy.spring.libary.controller;
 
-import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
 import com.bloodspy.spring.libary.model.LibaryCard;
 import com.bloodspy.spring.libary.service.LibaryCardService;
+import com.bloodspy.spring.libary.utils.AppConstant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +24,11 @@ public class LibaryCardController {
     LibaryCardService libaryCardService;
 
     @GetMapping
-    public List<LibaryCard> getAllLibaryCard() {
-        List<LibaryCard> libaryCards = libaryCardService.getAllLibaryCard();
-
-        return libaryCards;
+    public ResponseEntity<Page<LibaryCard>> getAllLibaryCard(
+            @RequestParam(name = "page", required = false, defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstant.DEFAULT_PAGE_SIZE) int size
+    ) {
+        return libaryCardService.getAllLibaryCard(page, size);
     }
 
     @GetMapping("/{id}")

@@ -1,10 +1,16 @@
 package com.bloodspy.spring.libary.service;
 
 import com.bloodspy.spring.libary.dao.ReaderRepository;
-import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
+import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchElementException;
+import com.bloodspy.spring.libary.model.Author;
 import com.bloodspy.spring.libary.model.Reader;
+import com.bloodspy.spring.libary.utils.AppConstant;
+import com.bloodspy.spring.libary.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,15 +28,18 @@ public class ReaderService {
 
     ReaderRepository readerRepository;
 
-    public List<Reader> getAllReader() {
-        List<Reader> readers = readerRepository.findAll();
+    public ResponseEntity<Page<Reader>> getAllReader(int page, int size) {
+        AppUtils.validatePageNumberAndSize(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, AppConstant.ID);
 
-        return readers;
+        Page<Reader> readers = readerRepository.findAll(pageable);
+
+        return new ResponseEntity<>(readers, HttpStatus.OK);
     }
 
     public ResponseEntity<Reader> getReader(int id) {
         Reader reader = readerRepository.findById(id).orElseThrow(
-                () -> new NoSuchException(entityName, id)
+                () -> new NoSuchElementException(entityName, id)
         );
 
         return new ResponseEntity<>(reader, HttpStatus.OK);
@@ -50,7 +59,7 @@ public class ReaderService {
 
     public ResponseEntity<String> deleteReader(int id) {
         Reader reader = readerRepository.findById(id).orElseThrow(
-                () -> new NoSuchException(entityName, id)
+                () -> new NoSuchElementException(entityName, id)
         );
 
         readerRepository.delete(reader);

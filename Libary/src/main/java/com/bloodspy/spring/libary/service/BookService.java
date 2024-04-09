@@ -1,10 +1,15 @@
 package com.bloodspy.spring.libary.service;
 
 import com.bloodspy.spring.libary.dao.BookRepository;
-import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
+import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchElementException;
 import com.bloodspy.spring.libary.model.Book;
+import com.bloodspy.spring.libary.utils.AppConstant;
+import com.bloodspy.spring.libary.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,15 +26,18 @@ public class BookService {
     }
 
     BookRepository bookRepository;
-    public List<Book> getAllBook() {
-        List<Book> books = bookRepository.findAll();
+    public ResponseEntity<Page<Book>> getAllBook(int page, int size) {
+        AppUtils.validatePageNumberAndSize(page, size);
 
-        return books;
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, AppConstant.ID);
+        Page<Book> books = bookRepository.findAll(pageable);
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     public ResponseEntity<Book> getBook(int id) {
         Book book = bookRepository.findById(id).orElseThrow(
-                () -> new NoSuchException(entityName, id)
+                () -> new NoSuchElementException(entityName, id)
         );
 
         return new ResponseEntity<>(book, HttpStatus.OK);
@@ -49,7 +57,7 @@ public class BookService {
 
     public ResponseEntity<String> deleteBook(int id) {
         Book book = bookRepository.findById(id).orElseThrow(
-                () -> new NoSuchException(entityName, id)
+                () -> new NoSuchElementException(entityName, id)
         );
 
         bookRepository.delete(book);

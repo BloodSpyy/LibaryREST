@@ -2,8 +2,10 @@ package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.model.Book;
 import com.bloodspy.spring.libary.service.BookService;
+import com.bloodspy.spring.libary.utils.AppConstant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +24,11 @@ public class BookController {
     BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBook() {
-        List<Book> books = bookService.getAllBook();
-
-        return books;
+    public ResponseEntity<Page<Book>> getAllBook(
+            @RequestParam(name = "page", required = false, defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstant.DEFAULT_PAGE_SIZE) int size)
+    {
+        return bookService.getAllBook(page, size);
     }
 
     @GetMapping("{id}")

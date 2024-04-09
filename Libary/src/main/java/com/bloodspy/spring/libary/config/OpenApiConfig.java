@@ -1,4 +1,4 @@
-package com.bloodspy.spring.libary.controller.docs;
+package com.bloodspy.spring.libary.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;

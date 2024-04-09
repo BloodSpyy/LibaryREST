@@ -2,12 +2,12 @@ package com.bloodspy.spring.libary.controller;
 
 import com.bloodspy.spring.libary.model.Style;
 import com.bloodspy.spring.libary.service.StyleService;
+import com.bloodspy.spring.libary.utils.AppConstant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/styles")
@@ -22,10 +22,11 @@ public class StyleController {
     StyleService styleService;
 
     @GetMapping
-    public List<Style> getAllStyle() {
-        List<Style> styles = styleService.getAllStyle();
-
-        return styles;
+    public ResponseEntity<Page<Style>> getAllStyle(
+            @RequestParam(name = "page", required = false, defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstant.DEFAULT_PAGE_SIZE) int size
+    ) {
+        return styleService.getAllStyle(page, size);
     }
 
     @GetMapping("/{id}")
