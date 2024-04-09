@@ -1,77 +1,51 @@
 package com.bloodspy.spring.libary.controller;
 
-import com.bloodspy.spring.libary.entity.AuthorEntity;
-import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
-import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
-import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
+import com.bloodspy.spring.libary.model.Author;
 import com.bloodspy.spring.libary.service.AuthorService;
-import com.bloodspy.spring.libary.service.AuthorServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/authors")
 @Tag(name="Authors", description = "CRUD operations")
 public class AuthorController {
-    private final String entityName = "Author";
 
     @Autowired
-    public AuthorController(AuthorServiceImpl authorService,
-                            ReturnMessageHandler returnMessageHandler) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
-        this.returnMessageHandler = returnMessageHandler;
 
     }
 
     AuthorService authorService;
 
-    ReturnMessageHandler returnMessageHandler;
-
-    @GetMapping("/authors")
-    public List<AuthorEntity> getAllAuthor() {
-        List<AuthorEntity> authors = authorService.getAllAuthor();
+    @GetMapping
+    public List<Author> getAllAuthor() {
+        List<Author> authors = authorService.getAllAuthor();
 
         return authors;
     }
 
-    @GetMapping("/authors/{id}")
-    public AuthorEntity getAuthor(@PathVariable(name = "id") int id) {
-        AuthorEntity author = authorService.getAuthor(id);
-
-        if(author == null) {
-            throw new NoSuchException(entityName, id);
-        }
-
-        return author;
+    @GetMapping("{id}")
+    public ResponseEntity<Author> getAuthor(@PathVariable(name = "id") int id) {
+        return authorService.getAuthor(id);
     }
 
-    @PostMapping("/authors")
-    public ContainerReturnMessage addAuthor(@RequestBody AuthorEntity author) {
-        authorService.saveAuthor(author);
-
-        return returnMessageHandler.getAddMessage(entityName, author.getId());
+    @PostMapping
+    public ResponseEntity<Author> addAuthor(@RequestBody Author author) {
+        return authorService.addAuthor(author);
     }
 
-    @PutMapping("/authors")
-    public ContainerReturnMessage updateAuthor(@RequestBody AuthorEntity author) {
-        authorService.saveAuthor(author);
-
-        return returnMessageHandler.getUpdateMessage(entityName, author.getId());
+    @PutMapping
+    public ResponseEntity<Author> updateAuthor(@RequestBody Author author) {
+        return authorService.updateAuthor(author);
     }
 
-    @DeleteMapping("/authors/{id}")
-    public ContainerReturnMessage deleteAuthor(@PathVariable(name = "id") int id) {
-        AuthorEntity author = authorService.getAuthor(id);
-
-        if(author == null) {
-            throw new NoSuchException(entityName, id);
-        }
-
-        authorService.deleteAuthor(id);
-
-        return returnMessageHandler.getDeleteMessage(entityName, author.getId());
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAuthor(@PathVariable(name = "id") int id) {
+        return authorService.deleteAuthor(id);
     }
 }

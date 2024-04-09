@@ -1,15 +1,14 @@
-package com.bloodspy.spring.libary.entity;
+package com.bloodspy.spring.libary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name="author")
-public class AuthorEntity {
-    public AuthorEntity() {
+public class Author {
+    public Author() {
     }
 
     @Id
@@ -26,7 +25,7 @@ public class AuthorEntity {
     @OneToMany(cascade = CascadeType.ALL,
     mappedBy = "author")
     @JsonIgnore
-    private List<BookEntity> books;
+    private List<Book> books;
 
     public int getId() {
         return id;
@@ -52,11 +51,11 @@ public class AuthorEntity {
         this.surname = surname;
     }
 
-    public List<BookEntity> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<BookEntity> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

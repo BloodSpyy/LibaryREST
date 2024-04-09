@@ -1,4 +1,4 @@
-package com.bloodspy.spring.libary.entity;
+package com.bloodspy.spring.libary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -7,8 +7,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "style")
-public class StyleEntity {
-    public StyleEntity() {
+public class Style {
+    public Style() {
     }
 
     @Id
@@ -23,7 +23,7 @@ public class StyleEntity {
             {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JsonIgnore
-    private List<BookEntity> books;
+    private List<Book> books;
 
     public int getId() {
         return id;
@@ -41,11 +41,11 @@ public class StyleEntity {
         this.name = name;
     }
 
-    public List<BookEntity> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<BookEntity> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

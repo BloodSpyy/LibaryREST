@@ -1,4 +1,4 @@
-package com.bloodspy.spring.libary.entity;
+package com.bloodspy.spring.libary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -7,8 +7,8 @@ import java.util.List;
 
 @Entity
 @Table(name="book")
-public class BookEntity {
-    public BookEntity() {
+public class Book {
+    public Book() {
     }
 
     @Id
@@ -21,11 +21,11 @@ public class BookEntity {
 
     @ManyToOne()
     @JoinColumn(name = "author_id")
-    private AuthorEntity author;
+    private Author author;
 
     @ManyToOne()
     @JoinColumn(name = "style_id")
-    private StyleEntity style;
+    private Style style;
 
     @Column(name = "length")
     private int length;
@@ -38,7 +38,7 @@ public class BookEntity {
             mappedBy = "books"
     )
     @JsonIgnore
-    private List<LibaryCardEntity> libaryCards;
+    private List<LibaryCard> libaryCards;
 
     public int getId() {
         return id;
@@ -56,19 +56,19 @@ public class BookEntity {
         this.name = name;
     }
 
-    public AuthorEntity getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(AuthorEntity author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public StyleEntity getStyle() {
+    public Style getStyle() {
         return style;
     }
 
-    public void setStyle(StyleEntity style) {
+    public void setStyle(Style style) {
         this.style = style;
     }
 
@@ -88,11 +88,11 @@ public class BookEntity {
         this.cost = cost;
     }
 
-    public List<LibaryCardEntity> getLibaryCards() {
+    public List<LibaryCard> getLibaryCards() {
         return libaryCards;
     }
 
-    public void setLibaryCards(List<LibaryCardEntity> libaryCards) {
+    public void setLibaryCards(List<LibaryCard> libaryCards) {
         this.libaryCards = libaryCards;
     }
 

@@ -1,15 +1,13 @@
-package com.bloodspy.spring.libary.entity;
+package com.bloodspy.spring.libary.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "reader")
-public class ReaderEntity {
-    public ReaderEntity() {
+public class Reader {
+    public Reader() {
     }
 
     @Id
@@ -28,7 +26,7 @@ public class ReaderEntity {
 
     @OneToOne()
     @JoinColumn(name = "libary_card_id")
-    private LibaryCardEntity libaryCard;
+    private LibaryCard libaryCard;
 
     public int getId() {
         return id;
@@ -62,11 +60,11 @@ public class ReaderEntity {
         this.birthDate = birthDate;
     }
 
-    public LibaryCardEntity getLibaryCard() {
+    public LibaryCard getLibaryCard() {
         return libaryCard;
     }
 
-    public void setLibaryCard(LibaryCardEntity libaryCard) {
+    public void setLibaryCard(LibaryCard libaryCard) {
         this.libaryCard = libaryCard;
     }
 

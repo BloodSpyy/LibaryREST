@@ -1,76 +1,51 @@
 package com.bloodspy.spring.libary.controller;
 
-import com.bloodspy.spring.libary.entity.LibaryCardEntity;
 import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
-import com.bloodspy.spring.libary.returnMessage.ContainerReturnMessage;
-import com.bloodspy.spring.libary.returnMessage.ReturnMessageHandler;
+import com.bloodspy.spring.libary.model.LibaryCard;
 import com.bloodspy.spring.libary.service.LibaryCardService;
-import com.bloodspy.spring.libary.service.LibaryCardServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/libaryCards")
 @Tag(name = "Libary card", description = "CRUD operations")
 public class LibaryCardController {
-    private final String entityName = "Libary card";
 
     @Autowired
-    public LibaryCardController(LibaryCardServiceImpl libaryCardService,
-                                ReturnMessageHandler returnMessageHandler) {
+    public LibaryCardController(LibaryCardService libaryCardService) {
         this.libaryCardService = libaryCardService;
-        this.returnMessageHandler = returnMessageHandler;
     }
 
     LibaryCardService libaryCardService;
-    ReturnMessageHandler returnMessageHandler;
 
-    @GetMapping("/libaryCards")
-    public List<LibaryCardEntity> getAllLibaryCard() {
-        List<LibaryCardEntity> libaryCards = libaryCardService.getAllLibaryCard();
+    @GetMapping
+    public List<LibaryCard> getAllLibaryCard() {
+        List<LibaryCard> libaryCards = libaryCardService.getAllLibaryCard();
 
         return libaryCards;
     }
 
-    @GetMapping("/libaryCards/{id}")
-    public LibaryCardEntity getLibaryCard(@PathVariable(name = "id") int id) {
-        LibaryCardEntity libaryCard = libaryCardService.getLibaryCard(id);
-
-        if(libaryCard == null) {
-            throw new NoSuchException(entityName, id);
-        }
-
-        return libaryCard;
+    @GetMapping("/{id}")
+    public ResponseEntity<LibaryCard> getLibaryCard(@PathVariable(name = "id") int id) {
+        return libaryCardService.getLibaryCard(id);
     }
 
-    @PostMapping("/libaryCards")
-    public ContainerReturnMessage addLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
-        libaryCardService.saveLibaryCard(libaryCard);
-
-        return returnMessageHandler.getAddMessage(entityName, libaryCard.getId());
+    @PostMapping
+    public ResponseEntity<LibaryCard> addLibaryCard(@RequestBody LibaryCard libaryCard) {
+        return libaryCardService.addLibaryCard(libaryCard);
     }
 
-    @PutMapping("/libaryCards")
-    public ContainerReturnMessage updateLibaryCard(@RequestBody LibaryCardEntity libaryCard) {
-        libaryCardService.saveLibaryCard(libaryCard);
-
-        return returnMessageHandler.getUpdateMessage(entityName, libaryCard.getId());
+    @PutMapping
+    public ResponseEntity<LibaryCard> updateLibaryCard(@RequestBody LibaryCard libaryCard) {
+        return libaryCardService.updateLibaryCard(libaryCard);
     }
 
-    @DeleteMapping("/libaryCards/{id}")
-    public ContainerReturnMessage removeLibaryCard(@PathVariable(name = "id") int id) {
-        LibaryCardEntity libaryCard = libaryCardService.getLibaryCard(id);
-
-        if(libaryCard == null) {
-            throw new NoSuchException(entityName, id);
-        }
-
-        libaryCardService.deleteLibaryCard(id);
-
-        return returnMessageHandler.getDeleteMessage(entityName, libaryCard.getId());
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> removeLibaryCard(@PathVariable(name = "id") int id) {
+        return libaryCardService.deleteLibaryCard(id);
     }
-
 }

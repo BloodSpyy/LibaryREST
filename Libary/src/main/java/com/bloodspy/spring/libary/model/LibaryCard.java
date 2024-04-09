@@ -1,4 +1,4 @@
-package com.bloodspy.spring.libary.entity;
+package com.bloodspy.spring.libary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -8,8 +8,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "libary_card")
-public class LibaryCardEntity {
-    public LibaryCardEntity() {
+public class LibaryCard {
+    public LibaryCard() {
     }
 
     @Id
@@ -29,12 +29,12 @@ public class LibaryCardEntity {
     @JoinTable(name = "libary_card_book",
     joinColumns = @JoinColumn(name = "libary_card_id"),
     inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<BookEntity> books;
+    private List<Book> books;
 
     @OneToOne(mappedBy = "libaryCard",
     cascade = CascadeType.ALL)
     @JsonIgnore
-    private ReaderEntity reader;
+    private Reader reader;
 
     public int getId() {
         return id;
@@ -60,19 +60,19 @@ public class LibaryCardEntity {
         this.endTime = endTime;
     }
 
-    public List<BookEntity> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<BookEntity> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
-    public ReaderEntity getReader() {
+    public Reader getReader() {
         return reader;
     }
 
-    public void setReader(ReaderEntity reader) {
+    public void setReader(Reader reader) {
         this.reader = reader;
     }
 

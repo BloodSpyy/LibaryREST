@@ -1,15 +1,59 @@
 package com.bloodspy.spring.libary.service;
 
-import com.bloodspy.spring.libary.entity.BookEntity;
+import com.bloodspy.spring.libary.dao.BookRepository;
+import com.bloodspy.spring.libary.exceptionHandler.exceptions.NoSuchException;
+import com.bloodspy.spring.libary.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface BookService {
-    public List<BookEntity> getAllBook();
+@Service
+public class BookService {
+    private final String entityName = "Book";
 
-    public BookEntity getBook(int id);
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
-    public void saveBook(BookEntity book);
+    BookRepository bookRepository;
+    public List<Book> getAllBook() {
+        List<Book> books = bookRepository.findAll();
 
-    public void deleteBook(int id);
+        return books;
+    }
+
+    public ResponseEntity<Book> getBook(int id) {
+        Book book = bookRepository.findById(id).orElseThrow(
+                () -> new NoSuchException(entityName, id)
+        );
+
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Book> addBook(Book book) {
+        book = bookRepository.save(book);
+
+        return new ResponseEntity<>(book, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<Book> updateBook(Book book) {
+        book = bookRepository.save(book);
+
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> deleteBook(int id) {
+        Book book = bookRepository.findById(id).orElseThrow(
+                () -> new NoSuchException(entityName, id)
+        );
+
+        bookRepository.delete(book);
+
+        return new ResponseEntity<>("Book was deleted", HttpStatus.OK);
+    }
 }
