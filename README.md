@@ -9,6 +9,5 @@
 
 <details>
 <summary>PostgreSQL architecture</summary>
-[![PostgreSQL architecture][1]][1]
-[1]: (https://github.com/BloodSpyy/LibaryREST/blob/main/static/DataBaseSchema.png)
+![](https://github.com/BloodSpyy/LibaryREST/blob/main/static/DataBaseSchema.png)
 </details>
