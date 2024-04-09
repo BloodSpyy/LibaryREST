@@ -5,7 +5,7 @@
 
 ## Project stack:
 #### 1. Spring
-#### 2. PostgreSQL (<details> [![PostgreSQL architecture][1]][1] [1]: https://github.com/BloodSpyy/LibaryREST/blob/main/static/DataBaseSchema.png </details>)
+#### 2. PostgreSQL ![architecture](https://github.com/BloodSpyy/LibaryREST/blob/main/static/DataBaseSchema.png)
 
 
 ![](https://github.com/BloodSpyy/LibaryREST/blob/main/static/DataBaseSchema.png)
